@@ -1,0 +1,107 @@
+﻿
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/bootstrap.css" />
+    <script type="text/javascript" src="~/Content/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="~/Content/js/bootstrap.js"></script>
+    <script type="text/javascript" src="~/Content/js/dropahover.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.carousel').carousel({
+                interval: 3000
+            });
+
+            $('.carousel').carousel('cycle');
+        });
+    </script>
+    <title>Movimento Jovem</title>
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; user-scalable=no " />
+</head>
+
+<body style="background-color:#f0efed;">
+    <div id="topo">
+        <div class="container" style="background-color:#fff;">
+            <img src="~/Content/images/logo.PNG" style="width:150px;" class="img-responsive" />
+        </div>
+    </div>
+    <div id="menu" class="container">
+        <div class="navbar navbar-default">
+            <div class="navbar-header">
+                @Html.ActionLink("Home", "Index", "Home", null,new { @class = "navbar-brand" })
+                <a class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+            </div>
+
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Movimento Jovem </a>
+
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Quem Somos", "QuemSomos", "Home")</li>
+                            <li>@Html.ActionLink("Nossa História", "NossaHistoria", "Home")</li>
+                            @*<li>@Html.ActionLink("Patrocinadores", "Patrocinadores", "Home")</li>*@
+                        </ul>
+
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Eventos </a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Açaidera", "Acaidera", "Eventos")</li>
+                            <li>@Html.ActionLink("Copa Movi", "CopaMovi", "Eventos")</li>
+                            <li>@Html.ActionLink("Origens", "Origens", "Eventos")</li>
+                            @*<li>@Html.ActionLink("Integra-Movi", "IntegraMovi", "Home")</li>*@
+                            <li>@Html.ActionLink("Movimente", "Movimente", "Eventos")</li>
+                            @*<li>@Html.ActionLink("Movi Your Body", "MYB", "Home")</li>*@
+                        </ul>
+                    </li>
+
+                    @*<li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Atividades</a>
+
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Kibonoiê", "Kibonoie", "Home")</li>
+                            <li>@Html.ActionLink("Assistência Social Dóm José Gaspar", "SocialDomJoseGaspar", "Home")</li>
+                            <li>@Html.ActionLink("Ikoi no Sono", "IkoinoSono", "Home")</li>
+                            <li>@Html.ActionLink("Yasuragui Home", "Yasuragui", "Home")</li>
+                            <li>@Html.ActionLink("Lar Santo Antônio", "LarSantoAntonio", "Home")</li>
+                            <li>@Html.ActionLink("Interkaikans", "Interkaikans", "Home")</li>
+                        </ul>
+                    </li>*@
+                    <li>@Html.ActionLink("Atividades", "Atividades", "Home")</li>
+                    <li>@Html.ActionLink("Galeria de Fotos", "GaleriaFotos")</li>
+                    @*<li>@Html.ActionLink("Fale Conosco", "FaleConosco", "Home")</li>*@
+                </ul>
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <div id="content">
+        @RenderBody()
+    </div>
+
+    <div id="footer" class="container" style="text-align:center;background-image: linear-gradient(to bottom, #065499 0%, #065499 100%);color:#fff;">
+
+        <p> Estrada dos Vados 260 - Bairro dos Fontes - Arujá - SP - Tel: 4652-0270‏</p>
+        <br clear="all" />
+
+
+
+
+    </div>
+</body>
+</html>
+
+
+
+

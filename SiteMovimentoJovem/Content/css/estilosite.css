@@ -1,0 +1,48 @@
+/*NossaHistoria */
+@media (max-width: 768px){
+	#imagem
+	{
+	
+	}
+	#historia
+	{
+	
+	}
+	
+	
+}
+@media (max-width: 992px){
+	#imagem
+	{
+
+	}
+	#historia
+	{
+	
+	}
+	
+	
+}
+
+@media(max-width:1200px){
+#imagem
+{
+ float:left;
+}
+#historia
+{
+ float:right;
+ width:50%;	
+}
+
+}
+
+#imagem
+{
+ float:left;
+}
+#historia
+{
+  float:right;
+  width:50%;	
+}

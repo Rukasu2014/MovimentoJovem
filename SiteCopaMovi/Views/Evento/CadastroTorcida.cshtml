@@ -1,0 +1,204 @@
+﻿@model SiteCopaMovi.Models.Torcida
+
+
+@{
+    ViewBag.Title = "Cadastro De Membros da Equipe";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var nome = ViewBag.nome;
+    var lista = ViewBag.lista;
+    var count = 0;
+
+}
+<script src="~/Content/js/maskedtelefone.js"></script>
+<script type="text/javascript">
+    /* Máscaras ER */
+    function mascara(o, f) {
+        v_obj = o
+        v_fun = f
+        setTimeout("execmascara()", 1)
+    }
+
+    function execmascara() {
+        v_obj.value = v_fun(v_obj.value);
+    }
+
+    function mtel(v) {
+        v = v.replace(/\D/g, ""); //Remove tudo o que não é dígito
+        v = v.replace(/^(\d{2})(\d)/g, "($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
+        v = v.replace(/(\d)(\d{4})$/, "$1-$2"); //Coloca hífen entre o quarto e o quinto dígitos
+        return v;
+    }
+
+    function id(el) {
+        return document.getElementById(el);
+    }
+
+    window.onload = function() {
+        id('TELEFONE').onkeypress = function() {
+            mascara(this, mtel);
+        }
+    }
+</script>
+
+<script type="text/javascript">
+    //<![CDATA[
+    jQuery(document).ready(function() {
+        //Inicio Mascara Telefone
+        jQuery('input[type=tel]').mask("(99) 9999-9999?9").ready(function(event) {
+            var target, phone, element;
+            target = (event.currentTarget) ? event.currentTarget : event.srcElement;
+            phone = target.value.replace(/\D/g, '');
+            element = $(target);
+            element.unmask();
+            if (phone.length > 10) {
+                element.mask("(99) 99999-999?9");
+            } else {
+                element.mask("(99) 9999-9999?9");
+            }
+        });
+        //Fim Mascara Telefone
+        //Inicio Mascara RG
+        jQuery("#rg").mask("99.999.999-**");
+        //Fim Mascara CPF
+
+    });
+    (jQuery);
+    //]]>
+</script>
+
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<script>
+    $(function () {
+        $("#DataNascimento").datepicker({
+            changeMonth: true,
+            changeYear: true
+        });
+        $("#DataNascimento").datepicker("option", "dateFormat", "dd/mm/yy");
+    });
+
+</script>
+<div id="conteudo">
+    <div class="panel panel-default container">
+        <div class="panel-heading">Cadastro de Torcida - Copa Movi @DateTime.Now.Year</div>
+        <div class="panel-body container" >
+
+         
+                @using (@Html.BeginForm(null, null, FormMethod.Post))
+                {
+                    <p align="center">
+                        @Html.AntiForgeryToken()
+                        <div class="row" style="margin: 50px;">
+                            <div class="row">
+                                <div class="col-md-2  visible-lg">
+                                    <img src="~/Content/images/nipponmovi.png" class="img-responsive" height="120" />
+                                </div>
+                                <div class="col-xs col-sm col-md col-lg-8">
+                                    <h2>Copa Movi @DateTime.Now.Year - Cadastro de Torcida</h2>
+                                </div>
+                                <div class="col-md-2  visible-lg">
+                                    <img src="~/Content/images/copamovi.png" class="img-responsive" width="100" height="100" />
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            <br />
+
+                            @*@Html.HiddenFor(model=>model.TIMEID)*@
+                            <div class="form-group"><label class="control-label">Nome:</label>@Html.TextBoxFor(model => model.TORCIDA_NOME, new { @class = "form-control" })</div>
+                            <div class="form-group"><label class="control-label">Rg:</label>@Html.TextBoxFor(model => model.RG, new { @class = "form-control", @id = "rg" })</div>
+                            <div class="form-group"><label class="control-label">Data Nascimento:</label>@Html.TextBoxFor(model => model.DATA_NASCIMENTO, "", new { @class = "form-control", @id = "DataNascimento", @value = "" })</div>
+
+                            <br />
+                            <br />
+                            <div class="form-group">
+                                <input type="submit" value="Adicionar Pessoas" class="btn btn-primary form-control" />
+                            </div>
+
+
+                            <div>
+                                <br />
+                                <br />
+
+                                <table class="table table-bordered">
+                                    <thead color style="color: #fff; border-color: #285e8e; background-color: #428bca;">
+                                        <tr>
+                                            <th colspan="5" class="text-center">Torcida do Time (@nome.NOME_EQUIPE)</th>
+                                        </tr>
+                                        <tr>
+                                            <th>Número:</th>
+                                            <th>Nome:</th>
+                                            <th>Rg:</th>
+                                            <th>Data Nascimento:</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @foreach (var a in lista)
+                                        {
+                                            count++;
+                                            <tr>
+                                                <td>@count</td>
+                                                <td id="@a.">@a.TORCIDA_NOME</td>
+                                                <td>@a.RG</td>
+                                                <td>@a.DATA_NASCIMENTO</td>
+
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                        
+
+
+
+                            </div>
+                            @Html.ValidationSummary()
+
+                        </div>
+                    </p>
+                }
+            
+
+                @*<div class="text-center">
+                    <h2>Você confirma as informações logo abaixo?</h2>
+                </div>
+                <br />
+                <br />
+                <table class="table table-bordered">
+                    <thead color style="color: #fff; border-color: #285e8e; background-color: #428bca;">
+                        <tr>
+                            <th colspan="5" class="text-center">Jogadores do Time (@nome.NOME_EQUIPE)</th>
+                        </tr>
+                        <tr>
+                            <th>Número:</th>
+                            <th>Nome:</th>
+                            <th>Rg:</th>
+                            <th>Data Nascimento:</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var a in lista)
+                        {
+                            count++;
+                            <tr>
+                                <td>@count</td>
+                                <td id="@a.NOME_JOGADORES">@a.NOME_JOGADORES</td>
+                                <td>@a.RG</td>
+                                <td>@a.DATA_NASCIMENTO</td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+                <div class="btn-group btn-group-justified">
+                    <a href="@Url.Action("CadastroTorcida", "Evento", nome.NOME_EQUIPE)" class="btn btn-primary ">Sim</a> <a href="@Url.Action("Excluir/"+nome.NOME_EQUIPE,"Evento")" class="btn btn-primary ">Não</a>
+                </div>*@
+   
+        </div>
+
+    </div>
+</div>

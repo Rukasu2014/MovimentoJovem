@@ -1,0 +1,147 @@
+﻿@model SiteCopaMovi.Models.Time
+
+
+@using SiteCopaMovi.Repositories
+@{
+    TimesRepositories time = new TimesRepositories();
+    ViewBag.Title = "Origens";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    //<![CDATA[
+    jQuery(document).ready(function () {
+        //Inicio Mascara Telefone
+        jQuery('input[type=tel]').mask("(99) 9999-9999?9").ready(function (event) {
+            var target, phone, element;
+            target = (event.currentTarget) ? event.currentTarget : event.srcElement;
+            phone = target.value.replace(/\D/g, '');
+            element = $(target);
+            element.unmask();
+            if (phone.length > 10) {
+                element.mask("(99) 99999-999?9");
+            } else {
+                element.mask("(99) 9999-9999?9");
+            }
+        });
+        //Fim Mascara Telefone
+        //Inicio Mascara RG
+        jQuery("#RG_CAPITAO").mask("99.999.999-**");
+        //Fim Mascara CPF
+
+    });
+    (jQuery);
+    //]]>
+</script>
+
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<script>
+    $(function () {
+        $("#DATA_NASCIMENTO_CAPITAO").datepicker({
+            changeMonth: true,
+            changeYear: true
+        });
+        $("#DATA_NASCIMENTO_CAPITAO").datepicker("option", "dateFormat", "mm/dd/yy");
+
+        $("#outra").hide();
+
+
+    });
+    function mudar() {
+        if ($("#Instituicao").val() == "Outra") {
+            $("#outra").show();
+        } else {
+            $("#outra").hide();
+        }
+    }
+</script>
+<script type="text/javascript">
+    /* Máscaras ER */
+    function mascara(o, f) {
+        v_obj = o
+        v_fun = f
+        setTimeout("execmascara()", 1)
+    }
+
+    function execmascara() {
+        v_obj.value = v_fun(v_obj.value)
+    }
+
+    function mtel(v) {
+        v = v.replace(/\D/g, ""); //Remove tudo o que não é dígito
+        v = v.replace(/^(\d{2})(\d)/g, "($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
+        v = v.replace(/(\d)(\d{4})$/, "$1-$2"); //Coloca hífen entre o quarto e o quinto dígitos
+        return v;
+    }
+
+    function id(el) {
+        return document.getElementById(el);
+    }
+
+    window.onload = function() {
+        id('TELEFONE').onkeypress = function() {
+            mascara(this, mtel);
+        }
+    }
+</script>
+<script>
+    $(function () {
+        $("#DATA_NASCIMENTO_CAPITAO").datepicker({
+            changeMonth: true,
+            changeYear: true,
+       });
+        $("#DATA_NASCIMENTO_CAPITAO").datepicker("option", "dateFormat", "dd/mm/yy");
+        $("#DATA_NASCIMENTO_CAPITAO").datepicker("option", "yearRange", "1900:2015");
+    });
+
+</script>
+<div id="conteudo">
+    <div class="panel panel-default container">
+        <div class="panel-heading">Cadastro de Equipes - Copa Movi @DateTime.Now.Year</div>
+        <div class="panel-body container">
+            @using (@Html.BeginForm(null, null, FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="row" style="margin: 50px;">
+                    <div class="row">
+                        <div class="col-md-2  visible-lg">
+                            <img src="~/Content/images/nipponmovi.png" class="img-responsive" height="120" />
+                        </div>
+                        <div class="col-xs col-sm col-md col-lg-8">
+                            <h2>Copa Movi @DateTime.Now.Year - Cadastro de Equipes </h2>
+                        </div>
+                        <div class="col-md-2  visible-lg">
+                            <img src="~/Content/images/copamovi.png" class="img-responsive" width="100" height="100" />
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <br />
+
+                    <div class="form-group"><label class="control-label">Nome da Equipe:</label>@Html.TextBoxFor(model => model.NOME_EQUIPE, "", new { @class = "form-control" })</div>
+                    <div class="form-group"><label class="control-label">Nome Completo(Capitão):</label>@Html.TextBoxFor(model => model.CAPITAO_DO_TIME, "", new {@class = "form-control"})</div>
+                    <div class="form-group"><label class="control-label">Rg(Capitão):</label>@Html.TextBoxFor(model => model.RG_CAPITAO, "", new {@class = "form-control"})</div>
+                    <div class="form-group"><label class="control-label">Data Nascimento(Capitão):</label>@Html.TextBoxFor(model => model.DATA_NASCIMENTO_CAPITAO, "", new { @class = "form-control" })</div>
+                    <div class="form-group"><label class="control-label">Sexo:</label>@Html.DropDownListFor(model => model.SEXO_TIME, time.RetornarListaSexo(), "Selecione o sexo", new { @class = "form-control" })</div>
+                    <div class="form-group"><label class="control-label">Modalidade:</label>@Html.DropDownListFor(model => model.TIPO_TIME, time.RetornarListaModalidade(), "Selecione a Modalidade", new { @class = "form-control" })</div>
+                    <div class="form-group"><label class="control-label">Email:</label>@Html.TextBoxFor(model => model.EMAIL, "", new { @class = "form-control" })</div>
+                    <div class="form-group"><label class="control-label">Telefone:</label>@Html.DisplayFor(model => model.TELEFONE)@Html.TextBoxFor(model => model.TELEFONE, "", new {@class = "form-control", @maxlength = "15"})</div>
+                   
+                    <div class="form-group"><label class="control-label">Instituição:</label>@Html.DropDownListFor(model => model.Instituicao, time.RetornarEntidades(), "Selecione a Entidade", new { @class = "form-control",@onclick="mudar();" })</div>
+                    <div class="form-group" id="outra"><label class="control-label">Outra:</label>@Html.TextBoxFor(model => model.OUTRA, new { @class = "form-control" })</div>
+                    <br />
+                    <br />
+                    <div class="form-group">
+                        <input type="submit" value="Salvar" class="btn btn-primary form-control" />
+                    </div>
+
+                    @Html.ValidationSummary()
+
+                </div>
+
+            }
+        </div>
+
+    </div>
+</div>
